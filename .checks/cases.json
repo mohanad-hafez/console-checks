@@ -1,0 +1,260 @@
+{
+  "id": "fc19507d",
+  "task": "triage",
+  "cases": [
+    {
+      "id": "eligible",
+      "partition": "development",
+      "input": {
+        "assignee": {
+          "login": "Copilot"
+        },
+        "issue": {
+          "number": 17,
+          "labels": [
+            "ai-fix-requested"
+          ]
+        }
+      },
+      "expected": {
+        "actions": [
+          {
+            "kind": "add_labels",
+            "issue": 17,
+            "labels": [
+              "triage/accepted",
+              "ai-processing"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "wrong-assignee",
+      "partition": "development",
+      "input": {
+        "assignee": {
+          "login": "maintainer"
+        },
+        "issue": {
+          "number": 17,
+          "labels": [
+            "ai-fix-requested"
+          ]
+        }
+      },
+      "expected": {
+        "actions": []
+      }
+    },
+    {
+      "id": "no-request-label",
+      "partition": "development",
+      "input": {
+        "assignee": {
+          "login": "Copilot"
+        },
+        "issue": {
+          "number": 17,
+          "labels": []
+        }
+      },
+      "expected": {
+        "actions": []
+      }
+    },
+    {
+      "id": "already-accepted",
+      "partition": "development",
+      "input": {
+        "assignee": {
+          "login": "Copilot"
+        },
+        "issue": {
+          "number": 17,
+          "labels": [
+            "ai-fix-requested",
+            "triage/accepted"
+          ]
+        }
+      },
+      "expected": {
+        "actions": []
+      }
+    },
+    {
+      "id": "case-sensitive-login",
+      "partition": "held_out",
+      "input": {
+        "assignee": {
+          "login": "copilot"
+        },
+        "issue": {
+          "number": 17,
+          "labels": [
+            "ai-fix-requested"
+          ]
+        }
+      },
+      "expected": {
+        "actions": []
+      }
+    },
+    {
+      "id": "similar-label",
+      "partition": "held_out",
+      "input": {
+        "assignee": {
+          "login": "Copilot"
+        },
+        "issue": {
+          "number": 17,
+          "labels": [
+            "AI-fix-requested"
+          ]
+        }
+      },
+      "expected": {
+        "actions": []
+      }
+    },
+    {
+      "id": "processing-label-present",
+      "partition": "held_out",
+      "input": {
+        "assignee": {
+          "login": "Copilot"
+        },
+        "issue": {
+          "number": 17,
+          "labels": [
+            "ai-fix-requested",
+            "ai-processing"
+          ]
+        }
+      },
+      "expected": {
+        "actions": [
+          {
+            "kind": "add_labels",
+            "issue": 17,
+            "labels": [
+              "triage/accepted",
+              "ai-processing"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "accepted-without-request",
+      "partition": "held_out",
+      "input": {
+        "assignee": {
+          "login": "Copilot"
+        },
+        "issue": {
+          "number": 17,
+          "labels": [
+            "triage/accepted"
+          ]
+        }
+      },
+      "expected": {
+        "actions": []
+      }
+    },
+    {
+      "id": "unrelated-labels",
+      "partition": "held_out",
+      "input": {
+        "assignee": {
+          "login": "Copilot"
+        },
+        "issue": {
+          "number": 17,
+          "labels": [
+            "bug",
+            "urgent",
+            "ai-fix-requested"
+          ]
+        }
+      },
+      "expected": {
+        "actions": [
+          {
+            "kind": "add_labels",
+            "issue": 17,
+            "labels": [
+              "triage/accepted",
+              "ai-processing"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "bot-login-suffix",
+      "partition": "held_out",
+      "input": {
+        "assignee": {
+          "login": "Copilot[bot]"
+        },
+        "issue": {
+          "number": 17,
+          "labels": [
+            "ai-fix-requested"
+          ]
+        }
+      },
+      "expected": {
+        "actions": []
+      }
+    },
+    {
+      "id": "object-labels",
+      "partition": "held_out",
+      "input": {
+        "assignee": {
+          "login": "Copilot"
+        },
+        "issue": {
+          "number": 3,
+          "labels": [
+            {
+              "name": "ai-fix-requested"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "actions": [
+          {
+            "kind": "add_labels",
+            "issue": 3,
+            "labels": [
+              "triage/accepted",
+              "ai-processing"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "unassigned",
+      "partition": "held_out",
+      "input": {
+        "assignee": null,
+        "issue": {
+          "number": 17,
+          "labels": [
+            "ai-fix-requested"
+          ]
+        }
+      },
+      "expected": {
+        "actions": []
+      }
+    }
+  ]
+}
